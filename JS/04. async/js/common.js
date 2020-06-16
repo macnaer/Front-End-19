@@ -1,13 +1,32 @@
 let btn = document.querySelector("#root");
 btn.addEventListener("click", Main);
-const __URL = "https://jsonplaceholder.typicode.com/users";
 
 class AsyncLesson {
-  constructor() {}
-  Request() {}
+  constructor() {
+    this.__URL = "https://jsonplaceholder.typicode.com/users";
+    this.userStorage = [];
+    console.log("AsyncLesson constructor works");
+  }
+  async Request() {
+    let response = await fetch(this.__URL);
+    let data = await response.json();
+    this.SaveUserList(data);
+  }
+
+  SaveUserList(usetList) {
+    let count = 0;
+    let user = usetList.map((item) => {
+      count++;
+      return item;
+    });
+    this.userStorage.push(user);
+    console.log("Users count => ", count);
+    console.log("userStorage => ", this.userStorage);
+    localStorage.setItem("UsersList", this.userStorage);
+  }
 }
 
 function Main() {
   let obj = new AsyncLesson();
-  console.log("Works", typeof obj);
+  obj.Request();
 }
