@@ -20,13 +20,19 @@ class AsyncLesson {
       return item;
     });
     this.userStorage.push(user);
-    console.log("Users count => ", count);
-    console.log("userStorage => ", this.userStorage);
+    // console.log("Users count => ", count);
+    // console.log("userStorage => ", this.userStorage);
     localStorage.setItem("UsersList", this.userStorage);
+  }
+  GetUserList() {
+    let userList = localStorage.getItem("UsersList");
+    return userList;
   }
 }
 
-function Main() {
+async function Main() {
   let obj = new AsyncLesson();
-  obj.Request();
+  await obj.Request();
+  let arr = await obj.GetUserList();
+  console.log("ARR = ", arr);
 }
